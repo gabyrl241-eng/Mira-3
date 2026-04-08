@@ -1,0 +1,988 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    font-family: "Pixelify Sans", sans-serif;
+    overflow-y: auto;
+}
+
+/* Envelope */
+#envelope-container {
+    text-align: center;
+    cursor: pointer;
+}
+
+#envelope {
+    width: 200px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Letter */
+#letter-container {
+    display: none;
+    position: fixed;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.letter-window {
+    width: 90vw;
+    max-width: 600px;
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    text-align: center;
+    transform: scale(1.2);
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.letter-window.open {
+    transform: scale(1);
+    opacity: 1;
+}
+
+h1 {
+    font-size: 28px;
+}
+
+/* Cat */
+.cat {
+    width: 220px;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    width: 110px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.yes-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Final */
+.final-text {
+    display: none;
+    margin-top: 15px;
+    font-size: 20px;
+}
+
+/* Hearts */
+.heart {
+    position: fixed;
+    bottom: 0;
+    font-size: 24px;
+    animation: floatUp 3s linear forwards;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+}
+
+/* Controles */
+.controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1100;
+}
+
+.controls button {
+    background: rgba(255,255,255,0.6);
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* DARK MODE */
+body.dark {
+    background: linear-gradient(135deg, #1a1a1a, #2b2b2b);
+    color: white;
+}
+
+body.dark .letter-window {
+    background: rgba(0,0,0,0.4);
+}
+
+/* Botón */
+.open-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: pink;
+    cursor: pointer;
+    z-index: 1200;
+}
+
+/* Modal carta */
+.secret-letter {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+.secret-letter.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.letter-paper {
+    width: 80%;
+    max-width: 500px;
+    padding: 40px;
+    background-image: url("window.png");
+    background-size: cover;
+    border-radius: 15px;
+    transform: scale(0.8);
+    transition: 0.3s;
+}
+
+.secret-letter.show .letter-paper {
+    transform: scale(1);
+}
+
+/* Chat */
+#chat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.msg {
+    padding: 10px;
+    border-radius: 15px;
+    max-width: 80%;
+}
+
+.msg.left {
+    background: #ffffffaa;
+}
+
+.msg.right {
+    background: #ff4d6daa;
+    color: white;
+    align-self: flex-end;
+}
+
+/* Selección */
+.movies, .times {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.movie-btn, .time-btn {
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.7);
+    cursor: pointer;
+}
+
+.selected {
+    background: #ff4d6d;
+    color: white;
+}
+
+/* Ticket */
+.ticket {
+    margin: 20px auto;
+    width: 260px;
+    background: white;
+    border-radius: 15px;
+    text-align: center;
+    animation: ticketIn 0.6s ease;
+}
+
+.ticket-header {
+    background: #ff4d6d;
+    color: white;
+    padding: 10px;
+}
+
+.ticket-body {
+    padding: 10px;
+}
+
+.ticket-footer {
+    background: #eee;
+    padding: 8px;
+}
+
+#qr-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+#share-btn {
+    margin: 10px;
+    padding: 8px 15px;
+    border-radius: 10px;
+    background: #25D366;
+    color: white;
+    cursor: pointer;
+}
+
+@keyframes ticketIn {
+    from {
+        transform: translateY(50px) scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* =======================
+✨ FONDO ANIMADO (tipo IG)
+======================= */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+    background-size: 600% 600%;
+    animation: gradientMove 10s ease infinite;
+    z-index: -1;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* =======================
+💫 BOTONES GLOW
+======================= */
+.btn, .movie-btn, .time-btn, #confirm-btn {
+    box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+.btn:hover, .movie-btn:hover, .time-btn:hover {
+    box-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff4d6d;
+}
+
+/* =======================
+🎥 EFECTO ZOOM GLOBAL
+======================= */
+.letter-window {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.letter-window.open {
+    animation: zoomIn 0.5s ease;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* =======================
+💖 REACCIONES (likes flotando)
+======================= */
+.like {
+    position: fixed;
+    font-size: 20px;
+    animation: likeFloat 2s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes likeFloat {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-150px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* ===== TEXTO LEGIBLE DARK MODE ===== */
+body.dark h1,
+body.dark h3,
+body.dark p,
+body.dark label {
+    color: #ffffff;
+}
+
+body.dark input {
+    background: #333;
+    color: white;
+}
+
+/* mejora contraste general */
+body.dark .letter-window {
+    color: white;
+}
+
+body.dark .msg.left {
+    background: #444;
+    color: white;
+}
+
+body {
+    transition: transform 0.2s ease;
+}
+
+/* ❤️ efecto TikTok */
+.like {
+    position: fixed;
+    font-size: 30px;
+    pointer-events: none;
+    animation: likeFloat 2s ease forwards;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes likeFloat {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -120px) scale(1.5);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -200px) scale(0.8);
+    }
+}
+
+/* mejorar visibilidad en modo oscuro */
+body.dark {
+    color: #ffffff;
+}
+
+body.dark .msg.left {
+    background: #444;
+    color: white;
+}
+
+body.dark input {
+    background: #333;
+    color: white;
+}
+
+.ticket {
+    background: #f8f8f8;
+    border: 2px dashed #ff4d6d;
+    position: relative;
+}
+
+.ticket::before,
+.ticket::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    left: -10px;
+}
+
+.ticket::after {
+    right: -10px;
+    left: auto;
+}
+
+/* =======================
+   🎟️ FIX MODO OSCURO BOLETO
+======================= */
+
+body.dark .ticket {
+    background: #1e1e1e;
+    color: #ffffff;
+    border: 2px dashed #ff4d6d;
+}
+
+body.dark .ticket-header {
+    background: #ff4d6d;
+    color: white;
+}
+
+body.dark .ticket-body {
+    color: #ffffff;
+}
+
+body.dark .ticket-footer {
+    background: #333;
+    color: #ccc;
+}
+
+/* texto dentro del boleto */
+body.dark #ticket-movie,
+body.dark #ticket-date,
+body.dark #ticket-time {
+    color: #ffffff;
+}
+
+/* inputs visibles */
+body.dark input {
+    background: #333;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+/* mensajes chat */
+body.dark .msg.left {
+    background: #444;
+    color: #fff;
+}
+
+body.dark .msg.right {
+    background: #ff4d6d;
+    color: white;
+}
+
+/* 📅 inputs mejorados */
+#final-text input {
+    display: block;
+    width: 80%;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* botón confirmar */
+#save-date-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: #ff4d6d;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.ticket {
+    position: relative;
+    z-index: 1;
+}
+
+.secret-letter {
+    z-index: 1000;
+}
+
+.ticket {
+    width: 320px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    font-family: monospace;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    position: relative;
+}
+
+/* perforaciones */
+.ticket::before,
+.ticket::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #f5a3a3;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ticket::before { left: -10px; }
+.ticket::after { right: -10px; }
+
+/* header */
+.ticket-top {
+    background: #ff4d6d;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* body */
+.ticket-body {
+    padding: 15px;
+    text-align: center;
+}
+
+.ticket-body p {
+    margin: 5px 0;
+}
+
+/* footer */
+.ticket-bottom {
+    text-align: center;
+    padding: 10px;
+    background: #eee;
+}
+
+/* 🌙 modo oscuro FIX */
+body.dark .ticket {
+    background: #1e1e1e;
+    color: white;
+}
+
+body.dark .ticket-bottom {
+    background: #333;
+}
+
+.ticket {
+    background: linear-gradient(145deg, #ffffff, #f2f2f2);
+    border: 2px dashed #ccc;
+    position: relative;
+}
+
+.ticket::before,
+.ticket::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #111;
+    border-radius: 50%;
+}
+
+.ticket::before {
+    top: 50%;
+    left: -10px;
+    transform: translateY(-50%);
+}
+
+.ticket::after {
+    top: 50%;
+    right: -10px;
+    transform: translateY(-50%);
+}
+
+/* 🌙 DARK MODE COMPLETO */
+body.dark {
+    background: linear-gradient(135deg, #121212, #1f1f1f);
+    color: #ffffff;
+}
+
+/* carta */
+body.dark .letter-window {
+    background: rgba(0,0,0,0.6);
+    color: white;
+}
+
+#letter-container {
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* inputs */
+body.dark input {
+    background: #2b2b2b;
+    color: white;
+    border: 1px solid #555;
+}
+
+/* botones */
+body.dark button {
+    background: #ff4d6d;
+    color: white;
+}
+
+/* chat */
+body.dark .msg.left {
+    background: #333;
+    color: white;
+}
+
+body.dark .msg.right {
+    background: #ff4d6d;
+}
+
+/* modal */
+body.dark .letter-paper {
+    filter: brightness(0.8);
+}
+
+/* ticket */
+body.dark .ticket {
+    background: #1e1e1e;
+    color: white;
+}
+
+body.dark .ticket-bottom {
+    background: #333;
+}
+
+/* 🔥 botón ábreme bien centrado */
+.open-btn {
+    margin-top: 20px;
+    position: relative; /* 🔥 YA NO BLOQUEA */
+    z-index: 1;
+}
+
+/* 🔥 inputs separados */
+#final-text input {
+    display: block;
+    width: 85%;
+    margin: 12px auto;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+/* 🔥 modo oscuro REAL */
+body.dark {
+    background: #121212;
+    color: white;
+}
+
+body.dark .letter-window {
+    background: rgba(0,0,0,0.7);
+}
+
+body.dark input {
+    background: #2b2b2b;
+    color: white;
+}
+
+body.dark .ticket {
+    background: #1e1e1e;
+    color: white;
+}
+
+/* separación botones */
+#save-date-btn {
+    margin-top: 15px;
+}
+
+.open-btn {
+    bottom: 80px; /* antes estaba muy pegado */
+}
+
+.movies {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 10px;
+}
+
+.movie-card {
+    min-width: 120px;
+    cursor: pointer;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    text-align: center;
+}
+
+.movie-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.movie-card span {
+    display: block;
+    padding: 5px;
+}
+
+.movie-card:hover {
+    transform: scale(1.1);
+}
+
+.movie-card.selected {
+    outline: 3px solid #ff4d6d;
+}
+
+.ticket {
+    position: relative;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* efecto rasgado */
+.ticket::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    top: -10px;
+    background: radial-gradient(circle, transparent 10px, white 11px);
+    background-size: 20px 20px;
+}
+
+.ticket::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    bottom: -10px;
+    background: radial-gradient(circle, transparent 10px, white 11px);
+    background-size: 20px 20px;
+}
+
+.ticket {
+    animation: popTicket 0.6s ease;
+}
+
+@keyframes popTicket {
+    0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+/* =======================
+🔥 FIX FINAL BOLETO (prioridad máxima)
+======================= */
+
+.ticket {
+    position: relative !important;
+    background: linear-gradient(145deg, #ffffff, #f2f2f2) !important;
+    border: 2px dashed #ff4d6d !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    width: 320px !important;
+    z-index: 5;
+}
+
+/* 🔥 efecto rasgado REAL */
+.ticket::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    top: -10px;
+    background: radial-gradient(circle, transparent 10px, #fff 11px);
+    background-size: 20px 20px;
+}
+
+.ticket::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    bottom: -10px;
+    background: radial-gradient(circle, transparent 10px, #fff 11px);
+    background-size: 20px 20px;
+}
+
+/* 🌙 modo oscuro fix definitivo */
+body.dark .ticket {
+    background: #1e1e1e !important;
+    color: white !important;
+}
+
+/* 🔥 animación PRO */
+.ticket {
+    animation: popTicket 0.6s ease;
+}
+
+@keyframes popTicket {
+    0% { transform: scale(0.6) rotate(-8deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+.movie-card {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.movie-card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+/* 🔥 Ábreme arriba del formulario */
+.open-btn {
+    display: block;
+    margin: 10px auto 20px auto; /* centrado y separado */
+    position: relative !important;
+    z-index: 2;
+}
+
+#ticket {
+    margin-bottom: 80px; /* 🔥 espacio extra abajo */
+}
+
+#share-btn {
+    margin: 15px auto;
+    padding: 12px 20px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #25D366, #1ebe5d);
+    color: white;
+    font-weight: bold;
+    border: none;
+    display: block;
+    width: 80%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.ticket {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+/* 🔥 BOTÓN debajo del gato */
+.open-btn {
+    display: block;
+    margin: -20px auto 20px auto; /* lo sube hacia el gato */
+    position: relative;
+    z-index: 5;
+}
+
+/* 🔥 MEJORAR RENDER PARA EXPORTAR */
+.ticket {
+    transform: none !important;
+    filter: none !important;
+}
+
+/* evitar que se vea transparente */
+.ticket, 
+.ticket * {
+    background-clip: padding-box;
+}
+
+.cat {
+    display: block;
+    margin: 0 auto;
+}
+
+.open-btn {
+    display: block;
+    margin: 5px auto 20px auto;
+}
+
+body.jp {
+    font-family: "Noto Sans JP", sans-serif;
+}
+
+.qr-wrapper {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: auto;
+}
+
+.qr-wrapper canvas {
+  position: relative;
+  z-index: 2;
+  border-radius: 12px;
+}
+
+/* 🔥 Chakra animado */
+.chakra {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  top: -20px;
+  left: -20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,140,0,0.4), transparent 70%);
+  animation: chakraSpin 4s linear infinite;
+  z-index: 1;
+}
+
+@keyframes chakraSpin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* 🔥 partículas chakra */
+.chakra-particle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, #ff8c00, transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: chakraFade 0.8s linear forwards;
+  z-index: 999;
+}
+
+@keyframes chakraFade {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+#qr-container canvas {
+  border-radius: 12px;
+}
+
+#qr-container canvas {
+  background: transparent !important;
+}
+
+#ticket {
+  overflow: visible !important;
+}
+
+#share-btn {
+  display: block !important;
+  position: relative;
+  z-index: 10;
+}
+
+.qr-wrapper {
+  width: 220px;
+  height: 220px;
+}
+
+.ticket {
+  background: #ffffff !important;
+  color: #000 !important;
+}
+
+#ticket {
+  background: #fff;
+  color: #222;
+  filter: none;
+}

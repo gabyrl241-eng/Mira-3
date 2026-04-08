@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cita Confirmada 💖</title>
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: radial-gradient(circle, #ff7b00, #000);
+  color:white;
+  font-family:sans-serif;
+  overflow:hidden;
+}
+
+.container{
+  text-align:center;
+  animation: fadeIn 1.5s ease;
+}
+
+h1{
+  font-size:2.5rem;
+  margin-bottom:10px;
+}
+
+p{
+  font-size:1.2rem;
+}
+
+.btn{
+  margin-top:20px;
+  padding:12px 20px;
+  border:none;
+  border-radius:10px;
+  background:#ff4d6d;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* Animación tipo anime */
+.aura{
+  position:absolute;
+  width:300px;
+  height:300px;
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(255,140,0,0.5), transparent);
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin{
+  0%{ transform:rotate(0deg) scale(1);} 
+  50%{ transform:rotate(180deg) scale(1.2);} 
+  100%{ transform:rotate(360deg) scale(1);} 
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(0.8);} 
+  to{opacity:1; transform:scale(1);} 
+}
+</style>
+</head>
+<body>
+
+<div class="aura"></div>
+
+<div class="container">
+  <h1>🎬 Cita Confirmada 💖</h1>
+  <p id="info"></p>
+
+  <button class="btn" id="calendarBtn">📅 Guardar en calendario</button>
+</div>
+
+<script>
+// Obtener datos del QR (URL params)
+const params = new URLSearchParams(window.location.search);
+const fecha = params.get('fecha');
+const hora = params.get('hora');
+const peli = params.get('peli');
+
+const info = document.getElementById('info');
+info.textContent = `Nos vemos el ${fecha} a las ${hora} para ver ${peli} 💕`;
+
+// Crear archivo calendario (.ics)
+document.getElementById('calendarBtn').addEventListener('click', () => {
+  const start = fecha.replace(/-/g, '') + 'T' + hora.replace(':','') + '00';
+  const end = start;
+
+  const ics = `BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:Cita 💖
+DTSTART:${start}
+DTEND:${end}
+DESCRIPTION:Salida al cine
+END:VEVENT
+END:VCALENDAR`;
+
+  const blob = new Blob([ics], { type: 'text/calendar' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'cita.ics';
+  link.click();
+});
+</script>
+
+</body>
+</html>

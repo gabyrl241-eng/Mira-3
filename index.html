@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet"/>
+
+  <title>Una carta para ti 💌</title>
+</head>
+
+<body>
+
+<audio id="pop-sound" src="pop.mp3"></audio>
+<audio id="ninja-sound" src="ninja.mp3"></audio>
+<!-- Envelope -->
+<div id="envelope-container">
+  <img src="envelope.png" id="envelope" />
+  <p>♡ あなたへの手紙 ♡</p>
+</div>
+
+<!-- Letter -->
+<div id="letter-container">
+  <div class="letter-window">
+    
+    <h1 id="letter-title">Will you be my Valentine?</h1>
+
+    <img src="cat_heart.gif" class="cat" id="letter-cat" />
+
+    <div class="buttons" id="letter-buttons">
+      <img src="yes.png" class="btn yes-btn" />
+      <div class="no-wrapper">
+        <img src="no.png" class="btn no-btn" />
+      </div>
+    </div>
+
+
+    <div id="final-text" class="final-text">
+
+    <button id="open-letter-btn" class="open-btn" style="display:none;">
+      Ábreme 💌
+    </button>
+
+      <h3>Elige fecha y hora 📅</h3>
+
+      <input type="date" id="date-input">
+      <input type="time" id="time-input">
+
+      <button id="save-date-btn">Confirmar cita 🎬</button>
+
+      <p id="date-msg"></p>
+
+      <!-- 🎟️ BOLETO -->
+      <div id="ticket" class="ticket" style="display:none">
+              
+        <div class="ticket-top">🎬 CINEMA DATE</div>
+
+        <div class="ticket-body">
+          <p id="ticket-movie"></p>
+          <p id="ticket-date"></p>
+          <p id="ticket-time"></p>
+          <p>Para: Vero ❤️</p>
+        </div>
+
+        <div id="qr-container" class="qr-wrapper">
+          <div class="chakra"></div>
+        </div>
+
+        <p id="ticket-id"></p>
+
+        <button id="share-btn">📲 Compartir boleto</button>
+
+        <div class="ticket-bottom">Disfruta tu cita 💖</div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="secret-letter" class="secret-letter">
+  <div class="letter-paper">
+
+    <button id="close-letter-btn">✖</button>
+
+    <div id="chat-box"></div>
+
+    <div id="movie-selection" style="display:none;">
+          <h3>Elige película 🎥</h3>
+
+          <div class="movies">
+
+            <div class="movie-card" data-movie="Romántica 💖">
+              <img src="your name.jpg">
+              <span>Romántica</span>
+            </div>
+
+            <div class="movie-card" data-movie="Anime 🎌">
+              <img src="given.jpg">
+              <span>Anime</span>
+            </div>
+
+            <div class="movie-card" data-movie="Acción 🔥">
+              <img src="demon slayer.png">
+              <span>Acción</span>
+            </div>
+
+            <div class="movie-card" data-movie="Terror 👻">
+              <img src="terror.png">
+              <span>Terror</span>
+            </div>
+          </div>
+
+      <button id="confirm-btn">Confirmar</button>
+    </div>
+
+  </div>
+</div>
+
+<audio id="bg-music" loop>
+  <source src="music.mp3">
+</audio>
+
+<div class="controls">
+  <button id="music-toggle">🔊</button>
+  <button id="theme-toggle">🌙</button>
+  <button id="lang-toggle">🇯🇵</button>
+</div>
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+</body>
+</html>
